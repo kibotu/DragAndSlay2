@@ -4,8 +4,7 @@ using UnityEngine;
 
 namespace Assets.Scripts.Models
 {
-  	[Serializable]
-    public class PlayerData
+    public class PlayerData : MonoBehaviour
     {
         public string Uid;
         public int FbId;
