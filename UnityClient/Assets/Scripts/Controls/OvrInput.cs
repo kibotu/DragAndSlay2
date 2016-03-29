@@ -15,6 +15,11 @@ namespace Assets.Scripts.Controls
       OVRTouchpad.TouchHandler += HandleTouchHandler;
     }
 
+    void OnDestroy()
+    {
+      OVRTouchpad.TouchHandler -= HandleTouchHandler;
+    }
+
     private void HandleTouchHandler(object sender, EventArgs e)
     {
       var touchArgs = (OVRTouchpad.TouchArgs) e;
