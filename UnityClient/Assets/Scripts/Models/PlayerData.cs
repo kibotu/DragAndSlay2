@@ -8,8 +8,6 @@ namespace Assets.Scripts.Models
     public class PlayerData
     {
         public string Uid;
-        public int Turn;
-        public List<int> AckwowledgedPackages = new List<int>();
         public int FbId;
         public Color Color;
         public int Level;

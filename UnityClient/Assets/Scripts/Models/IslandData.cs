@@ -7,7 +7,7 @@ namespace Assets.Scripts.Models
 {
   public class IslandData : MonoBehaviour
   {
-    public int ShipType;
+    public GameObject ShipType;
     public PlayerData PlayerData;
     public int IslandType;
 
