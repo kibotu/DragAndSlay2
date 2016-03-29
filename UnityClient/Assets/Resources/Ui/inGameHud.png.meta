@@ -1,0 +1,214 @@
+fileFormatVersion: 2
+guid: 6a81ac4039ecb1341a5b21ccd0ae1c27
+timeCreated: 1459254089
+licenseType: Pro
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: inGameHud_0
+    21300002: inGameHud_1
+    21300004: inGameHud_2
+    21300006: inGameHud_3
+    21300008: inGameHud_4
+    21300010: inGameHud_5
+    21300012: inGameHud_6
+    21300014: inGameHud_7
+    21300016: inGameHud_8
+    21300018: inGameHud_9
+  serializedVersion: 2
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 1
+    linearTexture: 0
+    correctGamma: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 0
+  cubemapConvolution: 0
+  cubemapConvolutionSteps: 7
+  cubemapConvolutionExponent: 1.5
+  seamlessCubemap: 0
+  textureFormat: -1
+  maxTextureSize: 2048
+  textureSettings:
+    filterMode: -1
+    aniso: 16
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  rGBM: 0
+  compressionQuality: 50
+  allowsAlphaSplitting: 0
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 100
+  alphaIsTransparency: 1
+  textureType: 8
+  buildTargetSettings: []
+  spriteSheet:
+    sprites:
+    - name: inGameHud_0
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 357
+        width: 238
+        height: 153
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -8, y: 76.5}
+        - {x: -25, y: 72.5}
+        - {x: -33, y: 55.5}
+        - {x: -61, y: 18.5}
+        - {x: -106, y: 13.5}
+        - {x: -117, y: 3.5}
+        - {x: -119, y: -8.5}
+        - {x: -119, y: -76.5}
+        - {x: 119, y: -76.5}
+        - {x: 119, y: 76.5}
+    - name: inGameHud_1
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 298
+        width: 201
+        height: 57
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -100.5, y: 28.5}
+        - {x: -100.5, y: 21.5}
+        - {x: -34.5, y: -26.5}
+        - {x: -26.5, y: -28.5}
+        - {x: 41.5, y: -28.5}
+        - {x: 100.5, y: 18.5}
+        - {x: 100.5, y: 28.5}
+    - name: inGameHud_2
+      rect:
+        serializedVersion: 2
+        x: 205
+        y: 149
+        width: 42
+        height: 206
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -21, y: 103}
+        - {x: -21, y: -103}
+        - {x: 21, y: -103}
+        - {x: 21, y: 36}
+        - {x: 6, y: 103}
+    - name: inGameHud_3
+      rect:
+        serializedVersion: 2
+        x: 162
+        y: 276
+        width: 20
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: inGameHud_4
+      rect:
+        serializedVersion: 2
+        x: 184
+        y: 279
+        width: 18
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: inGameHud_5
+      rect:
+        serializedVersion: 2
+        x: 162
+        y: 258
+        width: 18
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: inGameHud_6
+      rect:
+        serializedVersion: 2
+        x: 185
+        y: 258
+        width: 17
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: inGameHud_7
+      rect:
+        serializedVersion: 2
+        x: 162
+        y: 240
+        width: 16
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: inGameHud_8
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 188
+        width: 116
+        height: 50
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 56, y: 25}
+        - {x: -58, y: 25}
+        - {x: -58, y: -25}
+        - {x: 49, y: -25}
+        - {x: 58, y: -19}
+        - {x: 58, y: 23}
+    - name: inGameHud_9
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 6
+        width: 158
+        height: 141
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -79, y: 70.5}
+        - {x: -79, y: -63.5}
+        - {x: -76, y: -70.5}
+        - {x: 79, y: -70.5}
+        - {x: 79, y: 70.5}
+      - - {x: -53, y: -51.5}
+        - {x: -55, y: 59.5}
+        - {x: 69, y: 59.5}
+        - {x: 69, y: -52.5}
+    outline: []
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
