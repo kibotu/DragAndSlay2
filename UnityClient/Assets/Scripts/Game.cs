@@ -6,6 +6,7 @@ using Assets.Scripts.Network;
 using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.Networking;
+using UnityEngine.UI;
 
 namespace Assets.Scripts
 {
@@ -19,31 +20,10 @@ namespace Assets.Scripts
       get { return Registry.Instance.Ships.Count >= MaxPopulationLimit; }
     }
 
-    public void Start()
-    {
-    }
-
-    private void OnReady()
-    {
-      if (!isServer)
-      {
-        Debug.Log("[OnReady] Start");
-      }
-    }
-
     void OnDestroy()
     {
-      NetworkManager.singleton.StopHost();
-    }
-
-    public void StartupHost()
-    {
-      NetworkManager.singleton.StartHost();
-    }
-
-    public void JoinGame()
-    {
-      NetworkManager.singleton.StartClient();
+      if(isServer)
+      	NetworkManager.singleton.StopHost();
     }
 
     public void StartGame()

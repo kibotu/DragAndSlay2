@@ -81,5 +81,11 @@ namespace Assets.Scripts.Utils
     {
       _applicationIsQuitting = true;
     }
+
+    void OnApplicationQuit()
+    {
+      _instance = null;
+      DestroyImmediate(this);
+    }
   }
 }

@@ -8,5 +8,10 @@ namespace Assets.Scripts.Behaviour
     {
       DontDestroyOnLoad(this);
     }
+
+    void OnApplicationQuit()
+    {
+      DestroyImmediate(gameObject);
+    }
   }
 }

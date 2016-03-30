@@ -26,7 +26,7 @@ namespace Assets.Scripts.Controls
       if (touchArgs.TouchType == OVRTouchpad.TouchEvent.SingleTap)
       {
         //TODO: Insert code here to handle a single tap.  Note that there are other TouchTypes you can check for like directional swipes, but double tap is not currently implemented I believe.
-        Debug.Log("Received SingleTap");
+        // Debug.Log("Received SingleTap");
         _text.text = "singletap";
       }
       else
