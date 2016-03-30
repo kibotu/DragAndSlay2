@@ -6,7 +6,7 @@ namespace Assets.Scripts.Game
 {
   public class SelectionController : MonoBehaviour
   {
-    [SerializeField] readonly List<GameObject> _selected = new List<GameObject>();
+    // [SerializeField] readonly List<GameObject> _selected = new List<GameObject>();
 
     void Start()
     {

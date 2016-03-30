@@ -7,45 +7,27 @@ using UnityEngine.SceneManagement;
 
 namespace Assets.Scripts.Game
 {
-  public class Game : MonoBehaviour
+  public class Game : NetworkBehaviour
   {
-    public void SearchPlayer()
+    public void Start()
     {
-      Debug.Log("[Search Player]");
+      ((CustomNetworkManager) (NetworkManager.singleton)).OnReady += OnReady;
+    }
+
+    private void OnReady()
+    {
+      if (!isServer)
+      {
+        Debug.Log("[OnReady] Start");
 
 
 
-
-
-
-      // SceneManager.LoadScene(1);
+      }
     }
 
     void OnDestroy()
     {
       NetworkManager.singleton.StopHost();
-    }
-
-    void test()
-    {
-      // LAN Host
-      NetworkManager.singleton.StartHost();
-
-      // LAN Server Only
-      NetworkManager.singleton.StartServer();
-
-      // Stop Host
-      NetworkManager.singleton.StopHost();
-
-      // Enable Matchmaker
-      NetworkManager.singleton.StartMatchMaker();
-
-      // pair this with NetworkMatch.CreateMatch
-      // NetworkManager.OnMatchCreate()
-      // pair this with NetworkMatch.JoinMatch
-      // NetworkManager.OnMatchJoined();
-      // pair this with NetworkMatch.ListMatches*/
-      // NetworkManager.OnMatchList()
     }
   }
 }

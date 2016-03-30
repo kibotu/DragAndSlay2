@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.Networking.Match;
 using UnityEngine.UI;
@@ -77,15 +78,25 @@ namespace Assets.Scripts.Network
     public override void OnServerAddPlayer(NetworkConnection conn, short playerControllerId,
       NetworkReader extraMessageReader)
     {
-      Debug.Log("[OnServerAddPlayer] " + conn + " " + playerControllerId);
       base.OnServerAddPlayer(conn, playerControllerId, extraMessageReader);
+      Debug.Log("[OnServerAddPlayer] " + conn + " " + playerControllerId + " player: " +
+                NetworkManager.singleton.numPlayers + " reader " + extraMessageReader);
     }
+
+
+    public event Action OnReady;
 
     public override void OnServerAddPlayer(NetworkConnection conn, short playerControllerId)
     {
-      Debug.Log("[OnServerAddPlayer] " + conn + " " + playerControllerId);
       base.OnServerAddPlayer(conn, playerControllerId);
+      Debug.Log("[OnServerAddPlayer] " + conn + " " + playerControllerId + " player: " +
+                NetworkManager.singleton.numPlayers);
+
+      if (NetworkManager.singleton.numPlayers != 2) return;
+      if (OnReady != null)
+        OnReady.Invoke();
     }
+
 
     public override void OnServerRemovePlayer(NetworkConnection conn, PlayerController player)
     {

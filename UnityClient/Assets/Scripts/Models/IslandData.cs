@@ -2,10 +2,11 @@
 using System.Collections;
 using Assets.Scripts.Utils;
 using UnityEngine;
+using UnityEngine.Networking;
 
 namespace Assets.Scripts.Models
 {
-  public class IslandData : MonoBehaviour
+  public class IslandData : NetworkBehaviour
   {
     public GameObject ShipType;
     public PlayerData PlayerData;
