@@ -41,8 +41,6 @@ namespace Assets.Scripts.Behaviour
     [Command]
     private void CmdSpawn()
     {
-      Debug.Log("[CmdSpawn]");
-
       // 1) create ship by type
       var ship = Instantiate(_islandData.ShipType, transform.position, Quaternion.identity) as GameObject;
 
@@ -61,7 +59,6 @@ namespace Assets.Scripts.Behaviour
     [ClientRpc]
     private void RpcParenting(GameObject child, GameObject parent)
     {
-      Debug.Log("[RpcParenting]");
       child.transform.parent = parent.transform;
 
       var orbitting = child.GetComponent<Orbiting>();
