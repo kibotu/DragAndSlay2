@@ -5,7 +5,6 @@ namespace Assets.Scripts.Models
 {
     public class WorldData : MonoBehaviour
     {
-        public readonly int MaxPopulationLimit = 50;
 
         public void Awake()
         {
@@ -57,11 +56,6 @@ namespace Assets.Scripts.Models
                 default:
                     return Color.clear;
             }
-        }
-
-        public bool MaxPopulationLimitReached()
-        {
-            return Registry.Instance.Ships.Count >= MaxPopulationLimit;
         }
     }
 }

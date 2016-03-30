@@ -6,32 +6,18 @@ using UnityEngine;
 
 namespace Assets.Scripts.Models
 {
-  public class Registry : MonoBehaviour
+  public class Registry : Singleton<Registry>
   {
-    public void Awake()
-    {
-      Instance = this;
-    }
-
-    public static Registry Instance { get; private set; }
-
     public static class Levels
     {
       public const string MainMenuAndIntro = "MainMenuAndIntro";
       public const string TrainingsLevel = "TrainingsLevel";
-      public const string MultiplayerLevel = "MultiplayerLevel";
+      public const string MultiplayerLevel = "MultiplayerLedvel";
     }
 
-    [Serializable]
-    public struct UniqueGameObject
-    {
-      public string Uuid;
-      public GameObject GameObject;
-    }
-
-    [SerializeField] public List<UniqueGameObject> Player;
-    [SerializeField] public List<UniqueGameObject> Islands;
-    [SerializeField] public List<UniqueGameObject> Ships;
+    [SerializeField] public List<PlayerData> Player;
+    [SerializeField] public List<IslandData> Islands;
+    [SerializeField] public List<ShipData> Ships;
 
     public void Clear()
     {

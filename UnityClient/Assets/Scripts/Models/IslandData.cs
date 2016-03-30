@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using Assets.Scripts.Network;
 using Assets.Scripts.Utils;
 using UnityEngine;
 using UnityEngine.Networking;
@@ -8,40 +9,33 @@ namespace Assets.Scripts.Models
 {
   public class IslandData : NetworkBehaviour
   {
+    [SyncVar] public string Uuid;
+    [SyncVar] public string PlayerUuid;
+
     public GameObject ShipType;
-    public PlayerData PlayerData;
-    public int IslandType;
 
     /// spawn per second
-    public float SpawnRate;
+    [SyncVar] public float SpawnRate;
 
-    public int MaxSpawn;
-    public float CurrentRespawnRate;
-
-    private string _uuid;
-
-    public string Uuid
-    {
-      get { return _uuid ?? (_uuid = Guid.NewGuid().ToString()); }
-      set { _uuid = value; }
-    }
+    [SyncVar] public int MaxSpawn;
+    [SyncVar] public float CurrentRespawnRate;
 
     public Renderer IslandRenderer;
 
-    public void Start()
+    public void Awake()
     {
-      Registry.Instance.Islands.Add(new Registry.UniqueGameObject {Uuid = Uuid, GameObject = this.gameObject});
+      Registry.Instance.Islands.Add(this);
       CurrentRespawnRate = SpawnRate;
       Dye();
     }
 
-    public void Convert(PlayerData playerData)
+    public void Convert(string uuid)
     {
-      PlayerData = playerData;
+      PlayerUuid = uuid;
       Dye();
       var shockwave = Prefabs.Instance.GetNewShockwave();
       shockwave.transform.position = transform.position;
-      shockwave.GetComponent<DetonatorShockwave>().color = PlayerData.Color;
+//      shockwave.GetComponent<DetonatorShockwave>().color = PlayerData.Color;
     }
 
     public void Dye()
@@ -79,7 +73,7 @@ namespace Assets.Scripts.Models
         var ship = island.transform.GetChild(i).gameObject;
         var otherShipData = ship.GetComponent<ShipData>(); // possibly cachable
         if (otherShipData == null) continue; // skip non ship gameobjects
-        if (otherShipData.PlayerData.Uid == island.PlayerData.Uid)
+        if (otherShipData.PlayerData.Uuid == island.PlayerUuid)
         {
           ++friendly;
         }
@@ -102,7 +96,7 @@ namespace Assets.Scripts.Models
         var ship = island.transform.GetChild(i).gameObject;
         var otherShipData = ship.GetComponent<ShipData>(); // possibly cachable
         if (otherShipData == null) continue; // skip non ship gameobjects
-        if (otherShipData.PlayerData.Uid == thisUid)
+        if (otherShipData.PlayerData.Uuid == thisUid)
           enemyShips.Add(ship);
       }
       return enemyShips;
@@ -116,7 +110,7 @@ namespace Assets.Scripts.Models
         var ship = island.transform.GetChild(i).gameObject;
         var otherShipData = ship.GetComponent<ShipData>(); // possibly cachable
         if (otherShipData == null) continue; // skip non ship gameobjects
-        if (otherShipData.PlayerData.Uid != thisUid)
+        if (otherShipData.PlayerData.Uuid != thisUid)
           enemyShips.Add(ship);
       }
       return enemyShips;
@@ -131,7 +125,7 @@ namespace Assets.Scripts.Models
         var ship = island.transform.GetChild(i).gameObject;
         var otherShipData = ship.GetComponent<ShipData>(); // possibly cachable
         if (otherShipData == null) continue; // skip non ship gameobjects
-        if (otherShipData.PlayerData.Uid == island.PlayerData.Uid)
+        if (otherShipData.PlayerData.Uuid == island.PlayerUuid)
         {
           ++friendly;
         }

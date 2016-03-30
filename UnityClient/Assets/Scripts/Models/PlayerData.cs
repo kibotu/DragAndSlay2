@@ -1,39 +1,73 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using Assets.Scripts.Network;
 using UnityEngine;
+using UnityEngine.Networking;
 
 namespace Assets.Scripts.Models
 {
-    public class PlayerData : MonoBehaviour
+  public class PlayerData : NetworkBehaviour
+  {
+    [SyncVar] public string Uuid;
+    public Color Color;
+    [SyncVar] public int FbId;
+    [SyncVar] public int Level;
+    [SyncVar] public int Xp;
+    [SyncVar] public int Currancy;
+    [SyncVar] public int HardCurrancy;
+    [SyncVar] public int GamesPlayed;
+    [SyncVar] public int GamesWon;
+    [SyncVar] public int GamesLost;
+    [SyncVar] public int GamesLeft;
+    public int[] Friendlist;
+
+    public enum PlayerType
     {
-        public string Uid;
-        public int FbId;
-        public Color Color;
-        public int Level;
-        public int Xp;
-        public int Currancy;
-        public int HardCurrancy;
-        public int GamesPlayed;
-        public int GamesWon;
-        public int GamesLost;
-        public int GamesLeft;
-        public int[] Friendlist;
-        public PlayerType Type;
-
-        public enum PlayerType
-        {
-            Player, Offensive, Neutral
-        }
-
-        public static PlayerType GetPlayerType(string type)
-        {
-            switch (type)
-            {
-                case "player" : return PlayerType.Player;
-                case "offensive": return PlayerType.Offensive;
-                case "neutral":
-                default: return PlayerType.Neutral;
-            }
-        }
+      Player,
+      Offensive,
+      Neutral
     }
+
+    public static PlayerType GetPlayerType(string type)
+    {
+      switch (type)
+      {
+        case "player":
+          return PlayerType.Player;
+        case "offensive":
+          return PlayerType.Offensive;
+        case "neutral":
+        default:
+          return PlayerType.Neutral;
+      }
+    }
+
+    public void Awake()
+    {
+      Registry.Instance.Player.Add(this);
+    }
+
+    public override void OnStartLocalPlayer()
+    {
+      Uuid = Guid.NewGuid().ToString();
+      CmdSpawn(Uuid);
+    }
+
+    [Command]
+    public void CmdSpawn(string uuid)
+    {
+      Debug.Log("[CmdSpawn] " + gameObject.name + " " + uuid);
+
+      foreach (var islandData in Registry.Instance.Islands)
+      {
+        if (!string.IsNullOrEmpty(islandData.PlayerUuid)) continue;
+
+        islandData.PlayerUuid = uuid;
+        return;
+      }
+
+      // Registry.Instance.Islands.First(data => !string.IsNullOrEmpty(data.PlayerUuid)).PlayerUuid = uuid;
+    }
+  }
 }

@@ -2,6 +2,7 @@
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.Networking.Match;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 namespace Assets.Scripts.Network
@@ -23,7 +24,6 @@ namespace Assets.Scripts.Network
 
     public void SetIPAddress()
     {
-      NetworkManager.singleton.networkAddress = "192.168.0.169";
       Debug.Log("[SetIPAddress] " + NetworkManager.singleton.networkAddress);
     }
 
@@ -83,18 +83,11 @@ namespace Assets.Scripts.Network
                 NetworkManager.singleton.numPlayers + " reader " + extraMessageReader);
     }
 
-
-    public event Action OnReady;
-
     public override void OnServerAddPlayer(NetworkConnection conn, short playerControllerId)
     {
-      base.OnServerAddPlayer(conn, playerControllerId);
       Debug.Log("[OnServerAddPlayer] " + conn + " " + playerControllerId + " player: " +
                 NetworkManager.singleton.numPlayers);
-
-      if (NetworkManager.singleton.numPlayers != 2) return;
-      if (OnReady != null)
-        OnReady.Invoke();
+      base.OnServerAddPlayer(conn, playerControllerId);
     }
 
 

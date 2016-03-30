@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Assets.Scripts.Game
+namespace Assets.Scripts
 {
   public class SelectionController : MonoBehaviour
   {

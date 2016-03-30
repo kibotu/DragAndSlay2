@@ -25,7 +25,7 @@ namespace Assets.Scripts.Models
 
     public void Start()
     {
-      Registry.Instance.Ships.Add(new Registry.UniqueGameObject {Uuid = Uuid, GameObject = this.gameObject});
+      Registry.Instance.Ships.Add(this);
       AttackSpeed = 1f;
       Random.Range(1f, 2f);
       AttackDamage = 2f; // Random.Range(1.7f,2.5f);
