@@ -24,7 +24,7 @@ namespace Assets.Scripts
         {
           var island = hit.transform.parent.parent;
           if (!_isEnlarging)
-            StartCoroutine(Enlarge(island, new Vector3(1.5f, 1.5f, 1.5f), .25f));
+            StartCoroutine(Wiggle(island, new Vector3(1.5f, 1.5f, 1.5f), .25f));
           Debug.Log("You selected the " + hit.transform.parent.name);
         }
       }
@@ -32,7 +32,7 @@ namespace Assets.Scripts
 
     private bool _isEnlarging = false;
 
-    IEnumerator Enlarge(Transform target, Vector3 toScale, float duration)
+    private IEnumerator Wiggle(Transform target, Vector3 toScale, float duration)
     {
       _isEnlarging = true;
 

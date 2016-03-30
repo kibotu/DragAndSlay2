@@ -9,6 +9,7 @@ namespace Assets.Scripts.Models
     public GameObject Papership;
     public GameObject Steelship;
     public GameObject Island;
+    public GameObject Island2;
     public GameObject Explosion;
     public GameObject Rocket;
     public GameObject Player;
