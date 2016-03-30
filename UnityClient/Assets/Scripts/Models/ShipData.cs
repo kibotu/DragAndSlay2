@@ -1,27 +1,21 @@
 ﻿using System;
+using System.Runtime.InteropServices;
 using Assets.Scripts.Models;
 using Assets.Scripts.Utils;
 using Microsoft.Win32;
 using UnityEngine;
+using UnityEngine.Networking;
 using Random = UnityEngine.Random;
 
 namespace Assets.Scripts.Models
 {
-  public class ShipData : MonoBehaviour
+  public class ShipData : NetworkBehaviour
   {
-    public int ShipType;
-    public float AttackSpeed;
-    public float AttackDamage;
+    [SyncVar] public string Uuid;
+    [SyncVar] public string PlayerUuid;
 
-    public PlayerData PlayerData;
-
-    private string _uuid;
-
-    public string Uuid
-    {
-      get { return _uuid ?? (_uuid = Guid.NewGuid().ToString()); }
-      set { _uuid = value; }
-    }
+    [SyncVar] public float AttackSpeed;
+    [SyncVar] public float AttackDamage;
 
     public void Start()
     {
@@ -30,7 +24,8 @@ namespace Assets.Scripts.Models
       Random.Range(1f, 2f);
       AttackDamage = 2f; // Random.Range(1.7f,2.5f);
       // PlayerData = Registry.Player [PlayerData.Uid].GetComponent<PlayerData> ();
-      GetComponentInChildren<Renderer>().material.color = PlayerData.Color;
+      // GetComponentInChildren<Renderer>().material.color = PlayerData.Color;
+
     }
   }
 }

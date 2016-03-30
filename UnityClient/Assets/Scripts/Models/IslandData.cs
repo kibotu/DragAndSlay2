@@ -44,16 +44,7 @@ namespace Assets.Scripts.Models
       // IslandRenderer.material =
     }
 
-    /// <summary>
-    /// Computes current respawn timer based on dominance.
-    ///
-    /// 100% if no enemy ships are present.
-    /// 0% if at least one enemy ship but no own ships are present.
-    ///
-    /// Adds respawn percentage wise respawn time up to 200% of the actual value.
-    ///
-    /// </summary>
-    /// <returns>Respawn rate in percent. Value between 0f and 1f.</returns>
+    /// <returns>Respawn rate in seconds.</returns>
     public float ShipBuildTime()
     {
       var dominance = DominancePercentage(this);
@@ -63,6 +54,14 @@ namespace Assets.Scripts.Models
       return CurrentRespawnRate;
     }
 
+    /// <summary>
+    /// Computes current respawn timer based on dominance.
+    ///
+    /// 100% if no enemy ships are present.
+    /// 0% if at least one enemy ship but no own ships are present.
+    ///
+    /// </summary>
+    /// <returns>Respawn rate in percent. Value between 0f and 1f.</returns>
     public static float DominancePercentage(IslandData island)
     {
       var friendly = 0;
@@ -73,7 +72,7 @@ namespace Assets.Scripts.Models
         var ship = island.transform.GetChild(i).gameObject;
         var otherShipData = ship.GetComponent<ShipData>(); // possibly cachable
         if (otherShipData == null) continue; // skip non ship gameobjects
-        if (otherShipData.PlayerData.Uuid == island.PlayerUuid)
+        if (otherShipData.Uuid == island.PlayerUuid)
         {
           ++friendly;
         }
@@ -96,7 +95,7 @@ namespace Assets.Scripts.Models
         var ship = island.transform.GetChild(i).gameObject;
         var otherShipData = ship.GetComponent<ShipData>(); // possibly cachable
         if (otherShipData == null) continue; // skip non ship gameobjects
-        if (otherShipData.PlayerData.Uuid == thisUid)
+        if (otherShipData.Uuid == thisUid)
           enemyShips.Add(ship);
       }
       return enemyShips;
@@ -110,7 +109,7 @@ namespace Assets.Scripts.Models
         var ship = island.transform.GetChild(i).gameObject;
         var otherShipData = ship.GetComponent<ShipData>(); // possibly cachable
         if (otherShipData == null) continue; // skip non ship gameobjects
-        if (otherShipData.PlayerData.Uuid != thisUid)
+        if (otherShipData.Uuid != thisUid)
           enemyShips.Add(ship);
       }
       return enemyShips;
@@ -125,7 +124,7 @@ namespace Assets.Scripts.Models
         var ship = island.transform.GetChild(i).gameObject;
         var otherShipData = ship.GetComponent<ShipData>(); // possibly cachable
         if (otherShipData == null) continue; // skip non ship gameobjects
-        if (otherShipData.PlayerData.Uuid == island.PlayerUuid)
+        if (otherShipData.PlayerUuid == island.PlayerUuid)
         {
           ++friendly;
         }

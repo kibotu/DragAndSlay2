@@ -7,7 +7,7 @@ using UnityEngine.Networking;
 
 namespace Assets.Scripts.Models
 {
-  public class PlayerData : NetworkBehaviour
+  public class PlayerData : CustomNetworkBehaviour
   {
     [SyncVar] public string Uuid;
     public Color Color;
@@ -21,6 +21,8 @@ namespace Assets.Scripts.Models
     [SyncVar] public int GamesLost;
     [SyncVar] public int GamesLeft;
     public int[] Friendlist;
+
+    [SyncVar] public bool Spawned;
 
     public enum PlayerType
     {
@@ -50,20 +52,24 @@ namespace Assets.Scripts.Models
 
     public override void OnStartLocalPlayer()
     {
-      Uuid = Guid.NewGuid().ToString();
-      CmdSpawn(Uuid);
+      CmdSpawn(Guid.NewGuid().ToString());
     }
 
     [Command]
     public void CmdSpawn(string uuid)
     {
       Debug.Log("[CmdSpawn] " + gameObject.name + " " + uuid);
+      Uuid = uuid;
 
       foreach (var islandData in Registry.Instance.Islands)
       {
         if (!string.IsNullOrEmpty(islandData.PlayerUuid)) continue;
 
         islandData.PlayerUuid = uuid;
+        Spawned = true;
+
+        Game.StartGame();
+
         return;
       }
 
