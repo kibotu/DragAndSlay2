@@ -2,20 +2,21 @@ using UnityEngine;
 
 namespace Assets.Scripts.Models
 {
-    public class LifeData : MonoBehaviour {
-
-        public float MaxHp;
-        public float CurrentHp;
-        public float Armor;
-        public float MaxShield;
-        public float CurrentShield;
-        public float ShieldStrength;
-        public float HpRegen; 	    // hp 			/ sec
-        public float ShieldRegen;   // shield_regen / sec
+    public class LifeData : MonoBehaviour
+    {
+        public static float RegenerationTick = 1f;
 
         private float _hpRegenTime;
         private float _shieldRegenTime;
-        public static float RegenerationTick = 1f;
+        public float Armor;
+        public float CurrentHp;
+        public float CurrentShield;
+        public float HpRegen; // hp 			/ sec
+
+        public float MaxHp;
+        public float MaxShield;
+        public float ShieldRegen; // shield_regen / sec
+        public float ShieldStrength;
 
         public void Start()
         {

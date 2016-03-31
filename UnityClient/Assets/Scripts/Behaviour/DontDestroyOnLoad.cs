@@ -2,16 +2,16 @@
 
 namespace Assets.Scripts.Behaviour
 {
-  public class DontDestroyOnLoad : MonoBehaviour
-  {
-    void Awake()
+    public class DontDestroyOnLoad : MonoBehaviour
     {
-      DontDestroyOnLoad(this);
-    }
+        private void Awake()
+        {
+            DontDestroyOnLoad(this);
+        }
 
-    void OnApplicationQuit()
-    {
-      DestroyImmediate(gameObject);
+        private void OnApplicationQuit()
+        {
+            DestroyImmediate(gameObject);
+        }
     }
-  }
 }
