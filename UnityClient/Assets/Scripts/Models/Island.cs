@@ -7,23 +7,30 @@ namespace Assets.Scripts.Models
 {
     public class Island : NetworkBehaviour
     {
-        [SyncVar] public float CurrentRespawnRate;
-
-        public int Friendly_Ships;
-
-        public Renderer IslandRenderer;
-
-        [SyncVar] public int MaxSpawn;
-        [SyncVar] public string PlayerUuid;
+        [SyncVar]
+        public string Uuid;
+        [SyncVar]
+        public string PlayerUuid;
+        /// <summary>
+        /// Max amount of supported units per island.
+        /// </summary>
+        [SyncVar]
+        public int MaxSpawn;
+        /// <summary>
+        /// Ship spawn per second.
+        /// </summary>
+        [SyncVar]
+        public float SpawnRate;
+        [SyncVar]
+        public float CurrentRespawnRate;
 
         public GameObject ShipType;
 
-        /// spawn per second
-        [SyncVar] public float SpawnRate;
+        public Renderer IslandRenderer;
 
-        public int Unfriendly_Ships;
+        public int _friendlyShips;
 
-        [SyncVar] public string Uuid;
+        public int _unfriendlyShips;
 
         public List<Ship> FriendlyShips
         {
@@ -43,10 +50,10 @@ namespace Assets.Scripts.Models
             Uuid = Guid.NewGuid().ToString();
         }
 
-        private void Update()
+        public void Update()
         {
-            Friendly_Ships = FriendlyShips.Count;
-            Unfriendly_Ships = UnfriendlyShips.Count;
+            _friendlyShips = FriendlyShips.Count;
+            _unfriendlyShips = UnfriendlyShips.Count;
         }
 
         public void Convert(string uuid)

@@ -6,10 +6,11 @@ using UnityEngine.Networking;
 
 namespace Assets.Scripts.Behaviour
 {
+    [RequireComponent(typeof(Island))]
     public class SpawnUnits : CustomNetworkBehaviour
     {
         private Island _island;
-        [SerializeField] private float _startTime;
+        private float _startTime;
 
         private void Awake()
         {

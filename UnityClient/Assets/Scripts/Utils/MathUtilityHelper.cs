@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 
 namespace Assets.Scripts.Utils
 {
@@ -29,6 +31,16 @@ namespace Assets.Scripts.Utils
             var angle = Mathf.Atan2(v.y, v.x)*Mathf.Rad2Deg;
             if (angle < 0) angle += 360;
             return angle;
+        }
+
+        public static bool IsNullOrEmpty(this ICollection collection)
+        {
+            return collection == null || collection.Count == 0;
+        }
+
+        public static T GetRandom<T>(this IList<T> collection)
+        {
+            return collection[Random.Range(0, collection.Count)];
         }
     }
 }

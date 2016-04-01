@@ -4,6 +4,7 @@ using UnityEngine;
 
 namespace Assets.Scripts.Behaviour
 {
+    [RequireComponent(typeof(Orbiting))]
     public class MoveToTarget : MonoBehaviour
     {
         private Vector3 _finalDestination;
