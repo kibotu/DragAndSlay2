@@ -8,12 +8,12 @@ namespace Assets.Scripts.Behaviour
 {
     public class SpawnUnits : CustomNetworkBehaviour
     {
-        private IslandData _islandData;
+        private Island _island;
         [SerializeField] private float _startTime;
 
         private void Awake()
         {
-            _islandData = GetComponent<IslandData>();
+            _island = GetComponent<Island>();
         }
 
         private void Update()
@@ -30,9 +30,9 @@ namespace Assets.Scripts.Behaviour
 
             // 2) check against spawn time
             _startTime += Time.deltaTime;
-            if (_startTime < 1/_islandData.ShipBuildTime()) return;
+            if (_startTime < 1/_island.ShipBuildTime()) return;
 
-            _startTime -= 1/_islandData.ShipBuildTime();
+            _startTime -= 1/_island.ShipBuildTime();
 
             // 3) trigger spawn
             CmdSpawn();
@@ -42,11 +42,11 @@ namespace Assets.Scripts.Behaviour
         private void CmdSpawn()
         {
             // 1) create ship by type
-            var ship = Instantiate(_islandData.ShipType, transform.position, Quaternion.identity) as GameObject;
+            var ship = Instantiate(_island.ShipType, transform.position, Quaternion.identity) as GameObject;
 
             // 2) set ship data
             var shipData = ship.GetComponent<ShipData>();
-            shipData.PlayerUuid = _islandData.PlayerUuid;
+            shipData.PlayerUuid = _island.PlayerUuid;
             shipData.Uuid = Guid.NewGuid().ToString();
 
             // 3) spawn on all clients
@@ -68,7 +68,7 @@ namespace Assets.Scripts.Behaviour
 
         private bool HasReachedMaxSpawn()
         {
-            return Game.MaxPopulationLimitReached || IslandData.AmountFriendlyUnits(_islandData) >= _islandData.MaxSpawn;
+            return Game.MaxPopulationLimitReached || Island.AmountFriendlyUnits(_island) >= _island.MaxSpawn;
         }
     }
 }

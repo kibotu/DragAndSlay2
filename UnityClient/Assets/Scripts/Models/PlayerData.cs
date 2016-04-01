@@ -98,7 +98,7 @@ namespace Assets.Scripts.Models
             Debug.Log("[RpcSendUnits] " + source.name + " to " + target.name);
             // Debug.Log("[RpcSendUnits] Player " + playerUuid);
 
-            var ships = IslandData.GetFriendlyShips(source.GetComponent<IslandData>(), playerUuid);
+            var ships = Island.GetFriendlyShips(source.GetComponent<Island>(), playerUuid);
 
             foreach (var moveToTarget in ships.Select(playerShip => playerShip.GetComponent<MoveToTarget>()))
             {

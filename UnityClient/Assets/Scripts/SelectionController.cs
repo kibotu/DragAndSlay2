@@ -9,10 +9,10 @@ namespace Assets.Scripts
     public class SelectionController : MonoBehaviour
     {
         private bool _isEnlarging;
-        [SerializeField] private IslandData _source;
-        [SerializeField] private IslandData _target;
+        [SerializeField] private Island _source;
+        [SerializeField] private Island _target;
 
-        public SelectionController(IslandData source)
+        public SelectionController(Island source)
         {
             _source = source;
         }
@@ -39,7 +39,7 @@ namespace Assets.Scripts
 
             var currentPlayer = CurrentPlayer();
             var island = hit.transform.parent.parent;
-            var islandData = island.GetComponent<IslandData>();
+            var islandData = island.GetComponent<Island>();
             var isOwnedByPlayer = islandData.PlayerUuid.Equals(currentPlayer.Uuid);
             // Debug.Log("You selected the [" + island.name + "] owned by local player? [" + isOwnedByPlayer + "]");
 

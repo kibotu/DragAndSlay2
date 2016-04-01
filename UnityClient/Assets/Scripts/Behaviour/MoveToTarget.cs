@@ -39,8 +39,8 @@ namespace Assets.Scripts.Behaviour
             {
                 transform.parent = Target.transform;
                 _orbiting.enabled = true;
-                Arrive();
                 enabled = false;
+                Arrive();
             }
         }
 
@@ -48,6 +48,8 @@ namespace Assets.Scripts.Behaviour
         {
             var shipData = GetComponent<ShipData>();
             Debug.Log("[Arrive] " + shipData.Uuid + " for player " + shipData.PlayerUuid);
+//
+//            var shipData 
         }
     }
 }

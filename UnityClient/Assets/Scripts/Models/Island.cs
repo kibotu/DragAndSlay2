@@ -1,14 +1,15 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 
 namespace Assets.Scripts.Models
 {
-    public class IslandData : NetworkBehaviour
+    public class Island : NetworkBehaviour
     {
         [SyncVar] public float CurrentRespawnRate;
+
+        public int Friendly_Ships;
 
         public Renderer IslandRenderer;
 
@@ -19,6 +20,8 @@ namespace Assets.Scripts.Models
 
         /// spawn per second
         [SyncVar] public float SpawnRate;
+
+        public int Unfriendly_Ships;
 
         [SyncVar] public string Uuid;
 
@@ -40,10 +43,7 @@ namespace Assets.Scripts.Models
             Uuid = Guid.NewGuid().ToString();
         }
 
-        public int Friendly_Ships;
-        public int Unfriendly_Ships;
-
-        void Update()
+        private void Update()
         {
             Friendly_Ships = FriendlyShips.Count;
             Unfriendly_Ships = UnfriendlyShips.Count;
@@ -80,7 +80,7 @@ namespace Assets.Scripts.Models
         ///     0% if at least one enemy ship but no own ships are present.
         /// </summary>
         /// <returns>Respawn rate in percent. Value between 0f and 1f.</returns>
-        public static float DominancePercentage(IslandData island)
+        public static float DominancePercentage(Island island)
         {
             var friendly = 0;
             var foes = 0;
@@ -105,7 +105,7 @@ namespace Assets.Scripts.Models
             return sum == 0 ? 1f : friendly/(float) sum;
         }
 
-        public static List<ShipData> GetFriendlyShips(IslandData island, string playUuid)
+        public static List<ShipData> GetFriendlyShips(Island island, string playUuid)
         {
             var enemyShips = new List<ShipData>(island.transform.childCount - 1);
             for (var i = 0; i < island.transform.childCount; ++i)
@@ -119,7 +119,7 @@ namespace Assets.Scripts.Models
             return enemyShips;
         }
 
-        public static List<ShipData> GetEnemyShips(IslandData island, string thisUid)
+        public static List<ShipData> GetEnemyShips(Island island, string thisUid)
         {
             var enemyShips = new List<ShipData>(island.transform.childCount - 1);
             for (var i = 0; i < island.transform.childCount; ++i)
@@ -133,7 +133,7 @@ namespace Assets.Scripts.Models
             return enemyShips;
         }
 
-        public static int AmountFriendlyUnits(IslandData island)
+        public static int AmountFriendlyUnits(Island island)
         {
             var friendly = 0;
 

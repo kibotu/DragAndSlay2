@@ -6,7 +6,7 @@ namespace Assets.Scripts.Models
 {
     public class Registry : Singleton<Registry>
     {
-        [SerializeField] public List<IslandData> Islands;
+        [SerializeField] public List<Island> Islands;
 
         [SerializeField] public List<PlayerData> Player;
         [SerializeField] public List<ShipData> Ships;
