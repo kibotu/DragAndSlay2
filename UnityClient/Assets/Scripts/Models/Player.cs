@@ -7,7 +7,7 @@ using UnityEngine.Networking;
 
 namespace Assets.Scripts.Models
 {
-    public class PlayerData : CustomNetworkBehaviour
+    public class Player : CustomNetworkBehaviour
     {
         public enum PlayerType
         {

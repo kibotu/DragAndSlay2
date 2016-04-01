@@ -1,8 +1,9 @@
 using UnityEngine;
+using UnityEngine.Networking;
 
 namespace Assets.Scripts.Models
 {
-    public class LifeData : MonoBehaviour
+    public class Life : NetworkBehaviour
     {
         #region initial values
 
@@ -57,12 +58,17 @@ namespace Assets.Scripts.Models
 
         public void Start()
         {
+            CurrentHp = MaxHp;
+            CurrentShield = MaxShield;
             _hpRegenTime = 0;
             _shieldRegenTime = 0;
         }
 
         public void Update()
         {
+            if(!isServer)
+                return;
+
             RegenerateHp();
 
             RegenerateShields();

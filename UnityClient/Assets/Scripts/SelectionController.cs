@@ -73,7 +73,7 @@ namespace Assets.Scripts
             _target = null;
         }
 
-        private PlayerData CurrentPlayer()
+        private Player CurrentPlayer()
         {
             return Registry.Instance.Player.FirstOrDefault(player => player.isLocalPlayer);
         }

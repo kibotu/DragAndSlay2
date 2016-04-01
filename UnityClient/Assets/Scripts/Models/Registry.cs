@@ -8,8 +8,8 @@ namespace Assets.Scripts.Models
     {
         [SerializeField] public List<Island> Islands;
 
-        [SerializeField] public List<PlayerData> Player;
-        [SerializeField] public List<ShipData> Ships;
+        [SerializeField] public List<Player> Player;
+        [SerializeField] public List<Ship> Ships;
 
         public void Clear()
         {

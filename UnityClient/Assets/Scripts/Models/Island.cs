@@ -25,12 +25,12 @@ namespace Assets.Scripts.Models
 
         [SyncVar] public string Uuid;
 
-        public List<ShipData> FriendlyShips
+        public List<Ship> FriendlyShips
         {
             get { return GetFriendlyShips(this, PlayerUuid); }
         }
 
-        public List<ShipData> UnfriendlyShips
+        public List<Ship> UnfriendlyShips
         {
             get { return GetEnemyShips(this, PlayerUuid); }
         }
@@ -88,7 +88,7 @@ namespace Assets.Scripts.Models
             for (var i = 0; i < island.transform.childCount; ++i)
             {
                 var ship = island.transform.GetChild(i).gameObject;
-                var otherShipData = ship.GetComponent<ShipData>(); // possibly cachable
+                var otherShipData = ship.GetComponent<Ship>(); // possibly cachable
                 if (otherShipData == null) continue; // skip non ship gameobjects
                 if (otherShipData.Uuid == island.PlayerUuid)
                 {
@@ -105,13 +105,13 @@ namespace Assets.Scripts.Models
             return sum == 0 ? 1f : friendly/(float) sum;
         }
 
-        public static List<ShipData> GetFriendlyShips(Island island, string playUuid)
+        public static List<Ship> GetFriendlyShips(Island island, string playUuid)
         {
-            var enemyShips = new List<ShipData>(island.transform.childCount - 1);
+            var enemyShips = new List<Ship>(island.transform.childCount - 1);
             for (var i = 0; i < island.transform.childCount; ++i)
             {
                 var ship = island.transform.GetChild(i).gameObject;
-                var shipData = ship.GetComponent<ShipData>(); // possibly cachable
+                var shipData = ship.GetComponent<Ship>(); // possibly cachable
                 if (shipData == null) continue; // skip non ship gameobjects
                 if (shipData.PlayerUuid == playUuid)
                     enemyShips.Add(shipData);
@@ -119,13 +119,13 @@ namespace Assets.Scripts.Models
             return enemyShips;
         }
 
-        public static List<ShipData> GetEnemyShips(Island island, string thisUid)
+        public static List<Ship> GetEnemyShips(Island island, string thisUid)
         {
-            var enemyShips = new List<ShipData>(island.transform.childCount - 1);
+            var enemyShips = new List<Ship>(island.transform.childCount - 1);
             for (var i = 0; i < island.transform.childCount; ++i)
             {
                 var ship = island.transform.GetChild(i).gameObject;
-                var shipData = ship.GetComponent<ShipData>(); // possibly cachable
+                var shipData = ship.GetComponent<Ship>(); // possibly cachable
                 if (shipData == null) continue; // skip non ship gameobjects
                 if (shipData.PlayerUuid != thisUid)
                     enemyShips.Add(shipData);
@@ -140,7 +140,7 @@ namespace Assets.Scripts.Models
             for (var i = 0; i < island.transform.childCount; ++i)
             {
                 var ship = island.transform.GetChild(i).gameObject;
-                var otherShipData = ship.GetComponent<ShipData>(); // possibly cachable
+                var otherShipData = ship.GetComponent<Ship>(); // possibly cachable
                 if (otherShipData == null) continue; // skip non ship gameobjects
                 if (otherShipData.PlayerUuid == island.PlayerUuid)
                 {

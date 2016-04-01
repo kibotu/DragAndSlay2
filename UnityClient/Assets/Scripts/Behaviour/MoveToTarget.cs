@@ -46,7 +46,7 @@ namespace Assets.Scripts.Behaviour
 
         private void Arrive()
         {
-            var shipData = GetComponent<ShipData>();
+            var shipData = GetComponent<Ship>();
             Debug.Log("[Arrive] " + shipData.Uuid + " for player " + shipData.PlayerUuid);
 //
 //            var shipData 

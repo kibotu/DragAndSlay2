@@ -45,7 +45,7 @@ namespace Assets.Scripts.Behaviour
             var ship = Instantiate(_island.ShipType, transform.position, Quaternion.identity) as GameObject;
 
             // 2) set ship data
-            var shipData = ship.GetComponent<ShipData>();
+            var shipData = ship.GetComponent<Ship>();
             shipData.PlayerUuid = _island.PlayerUuid;
             shipData.Uuid = Guid.NewGuid().ToString();
 

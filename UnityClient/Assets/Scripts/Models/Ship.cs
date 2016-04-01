@@ -3,7 +3,7 @@ using UnityEngine.Networking;
 
 namespace Assets.Scripts.Models
 {
-    public class ShipData : NetworkBehaviour
+    public class Ship : NetworkBehaviour
     {
         [SyncVar] public float AttackDamage;
 

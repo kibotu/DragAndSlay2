@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Assets.Scripts.Behaviour
 {
-    public class IdleIsland : MonoBehaviour
+    public class IdlingTransformation : MonoBehaviour
     {
         public Vector2 minRotation;
         public Vector2 minRotSpeed;
