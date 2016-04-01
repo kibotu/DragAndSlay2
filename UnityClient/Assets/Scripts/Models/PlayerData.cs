@@ -61,10 +61,10 @@ namespace Assets.Scripts.Models
             Debug.Log("[CmdSpawn] " + gameObject.name + " " + uuid);
             Uuid = uuid;
 
-            foreach (var islandData in Registry.Instance.Islands)
-            {
-                if (!string.IsNullOrEmpty(islandData.PlayerUuid)) continue;
+            name = "Player " + uuid;
 
+            foreach (var islandData in Registry.Instance.Islands.Where(islandData => string.IsNullOrEmpty(islandData.PlayerUuid)))
+            {
                 islandData.PlayerUuid = uuid;
                 Spawned = true;
 
@@ -84,7 +84,7 @@ namespace Assets.Scripts.Models
         [Command]
         public void CmdSendUnits(string sourceIslandUuid, string targetIslandUuid)
         {
-            Debug.Log("[CmdSendUnits] " + sourceIslandUuid + " to " + targetIslandUuid);
+            // Debug.Log("[CmdSendUnits] " + sourceIslandUuid + " to " + targetIslandUuid);
 
             var source = Registry.Instance.Islands.Find(data => data.Uuid.Equals(sourceIslandUuid));
             var target = Registry.Instance.Islands.Find(data => data.Uuid.Equals(targetIslandUuid));
@@ -96,11 +96,9 @@ namespace Assets.Scripts.Models
         private void RpcSendUnits(GameObject source, GameObject target, string playerUuid)
         {
             Debug.Log("[RpcSendUnits] " + source.name + " to " + target.name);
-            Debug.Log("[RpcSendUnits] Player " + playerUuid);
+            // Debug.Log("[RpcSendUnits] Player " + playerUuid);
 
             var ships = IslandData.GetFriendlyShips(source.GetComponent<IslandData>(), playerUuid);
-
-            Debug.Log("ships: " + ships.Count);
 
             foreach (var moveToTarget in ships.Select(playerShip => playerShip.GetComponent<MoveToTarget>()))
             {
