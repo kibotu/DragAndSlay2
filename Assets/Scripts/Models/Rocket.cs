@@ -77,17 +77,7 @@ namespace Assets.Scripts.Models
 
             Debug.Log("[CmdDestroyIfDead] Destroy " + Defender.name);
             Registry.Instance.CurrentPlayer.RpcShowExplosionAt(Defender.GetComponent<Ship>().Uuid);
-            Defender.gameObject.SetActive(false);
-
-            // hack until i figure out how to destroy client objects after all clients have finished action
-            Coroutiner.StartCoroutine(VectorExtensions.Delay(() =>
-            {
-                if(!isServer)
-                    return;
-
-                Debug.Log("Destroying " + Defender.gameObject);
-                Destroy(Defender.gameObject);
-            }, MaxTravelSpeed));
+            Destroy(Defender.gameObject, 2f);
         }
 
         private void Hit()

@@ -58,6 +58,11 @@ namespace Assets.Scripts.Models
 
         public bool IsDying { get; set; }
 
+        public bool IsAlive
+        {
+            get { return CurrentHp > 0; }
+        }
+
         public void Start()
         {
             CurrentHp = MaxHp;
@@ -78,18 +83,18 @@ namespace Assets.Scripts.Models
             CmdUpdateHitPointsBar();
         }
 
-        [Command]
+        [Command(channel = 2)]
         private void CmdUpdateHitPointsBar()
         {
-            RpcUpdateHealthPointsBar(gameObject, CurrentHp / MaxHp);
+            RpcUpdateHealthPointsBar(gameObject, CurrentHp/MaxHp);
         }
 
         [ClientRpc]
-        void RpcUpdateHealthPointsBar(GameObject ship, float percent)
+        private void RpcUpdateHealthPointsBar(GameObject ship, float percent)
         {
             ship.GetComponentInChildren<HealthPointsBar>().Percent = percent;
         }
-        
+
         private void RegenerateShields()
         {
             if (!(CurrentShield < MaxShield))
@@ -116,11 +121,6 @@ namespace Assets.Scripts.Models
             _hpRegenTime -= 1/HpRegen;
 
             CurrentHp += HpRegen;
-        }
-
-        public bool IsAlive
-        {
-            get { return CurrentHp > 0;}
         }
     }
 }
