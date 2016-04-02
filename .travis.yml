@@ -25,3 +25,14 @@ script:
   
 notifications:
   email: false
+  
+#deploy:
+#    provider: releases
+#    api_key: "GITHUB OAUTH TOKEN"
+#    file: 
+#        - $(pwd)/Build/windows/ci-build.exe
+#        - $(pwd)/Build/osx/ci-build.app
+#        - $(pwd)/Build/android/ci-build.apk
+#    skip_cleanup: true
+#    on:
+#    tags: true
