@@ -36,8 +36,7 @@ namespace Assets.Scripts
             // island hit
             if (!hit.transform.parent.name.Equals("Island"))
                 return;
-
-            var currentPlayer = CurrentPlayer();
+            
             var island = hit.transform.parent.parent;
             var islandData = island.GetComponent<Island>();
             // Debug.Log("You selected the [" + island.name + "] owned by local player? [" + isOwnedByPlayer + "]");
@@ -64,14 +63,9 @@ namespace Assets.Scripts
                 return;
 
             // Debug.Log("send: " + _source.Uuid + " " + _target.Uuid);
-            currentPlayer.CmdSendUnits(_source.Uuid, _target.Uuid);
+            Registry.Instance.CurrentPlayer.CmdSendUnits(_source.Uuid, _target.Uuid);
             _source = null;
             _target = null;
-        }
-
-        private Player CurrentPlayer()
-        {
-            return Registry.Instance.Player.FirstOrDefault(player => player.isLocalPlayer);
         }
 
         private IEnumerator Wiggle(Transform target, Vector3 toScale, float duration)

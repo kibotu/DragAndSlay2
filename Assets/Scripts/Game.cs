@@ -35,12 +35,6 @@ namespace Assets.Scripts
             StartSpawning();
         }
 
-        IEnumerator Delay(float duration, Action action)
-        {
-            yield return new WaitForSeconds(duration);
-            action.Invoke();
-        }
-
         private void StartSpawning()
         {
             Debug.Log("[StartSpawning]");

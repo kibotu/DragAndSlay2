@@ -7,10 +7,12 @@ namespace Assets.Scripts.Behaviour
 {
     [RequireComponent(typeof (Ship))]
     [RequireComponent(typeof (MoveToTarget))]
+    [RequireComponent(typeof (Life))]
     public class Attacking : NetworkBehaviour
     {
         private MoveToTarget _moveToTarget;
         private Ship _ship;
+        private Life _life;
 
         /// <summary>
         ///     Attack speed helper variable.
@@ -36,6 +38,7 @@ namespace Assets.Scripts.Behaviour
         {
             _moveToTarget = GetComponent<MoveToTarget>();
             _ship = GetComponent<Ship>();
+            _life = GetComponent<Life>();
         }
 
         public void Update()
@@ -44,6 +47,12 @@ namespace Assets.Scripts.Behaviour
                 return;
 
             if (IsMoving())
+                return;
+
+            if(!_life.IsAlive)
+                return;
+
+            if(_life.IsDying)
                 return;
 
             CmdSearchAndDestroy();
@@ -60,7 +69,6 @@ namespace Assets.Scripts.Behaviour
             // 1) attack speed
             _startTime += Time.deltaTime;
             if (_startTime < 1/AttackSpeed) return;
-
             _startTime -= 1/AttackSpeed;
 
             // 2) current island
@@ -96,9 +104,13 @@ namespace Assets.Scripts.Behaviour
         [ClientRpc]
         private void RpcSearchAndDestroy(GameObject rocketGameObject, string sourceShipUuid, string targetShipUuid)
         {
+            Debug.Log("[RpcSearchAndDestroy] Sending rocket from " + sourceShipUuid + " to " + targetShipUuid);
             var rocket = rocketGameObject.GetComponent<Rocket>();
-            rocket.Attacker = Registry.Instance.Ships.Find(ship => ship.Uuid.Equals(sourceShipUuid)).transform.position;
-            rocket.Defender = Registry.Instance.Ships.Find(ship => ship.Uuid.Equals(targetShipUuid));
+            var source = Registry.Instance.Ships.Find(ship => ship.Uuid.Equals(sourceShipUuid));
+            rocket.Attacker = source.transform.position;
+            var target = Registry.Instance.Ships.Find(ship => ship.Uuid.Equals(targetShipUuid));
+            rocket.Defender = target;
+            Debug.Log("[RpcSearchAndDestroy] Sending Rocket from " + source.name + " to " + target.name);
         }
 
         private static bool IsOnEnemyIsland(Island island, string playerUuid)

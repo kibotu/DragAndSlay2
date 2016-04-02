@@ -99,7 +99,8 @@ namespace Assets.Scripts.Models
                 var otherShipData = ship.GetComponent<Ship>(); // possibly cachable
                 if (otherShipData == null) continue; // skip non ship gameobjects
 
-                if (onlyLiving && !ship.GetComponent<Life>().IsAlive())
+                var life = ship.GetComponent<Life>();
+                if (onlyLiving && !life.IsAlive && !life.IsDying)
                     continue;
 
                 if (otherShipData.Uuid == island.PlayerUuid)
@@ -129,7 +130,8 @@ namespace Assets.Scripts.Models
                 var shipData = ship.GetComponent<Ship>(); // possibly cachable
                 if (shipData == null) continue; // skip non ship gameobjects
 
-                if (onlyLiving && !ship.GetComponent<Life>().IsAlive())
+                var life = ship.GetComponent<Life>();
+                if (onlyLiving && !life.IsAlive && !life.IsDying)
                     continue;
 
                 if (shipData.PlayerUuid == playUuid)
@@ -148,7 +150,8 @@ namespace Assets.Scripts.Models
                 var shipData = ship.GetComponent<Ship>(); // possibly cachable
                 if (shipData == null) continue; // skip non ship gameobjects
 
-                if (onlyLiving && !ship.GetComponent<Life>().IsAlive())
+                var life = ship.GetComponent<Life>();
+                if (onlyLiving && !life.IsAlive && !life.IsDying)
                     continue;
 
                 if (shipData.PlayerUuid != thisUid)
@@ -165,7 +168,7 @@ namespace Assets.Scripts.Models
         public void OnDestroy()
         {
             if (!Registry.ApplicationIsQuitting)
-                Registry.Instance.Islands.Remove(Registry.Instance.Islands.First(item => item == this));
+                Registry.Instance.Remove(this);
         }
     }
 }

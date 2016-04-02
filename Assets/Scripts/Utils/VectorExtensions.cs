@@ -1,6 +1,8 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace Assets.Scripts.Utils
 {
@@ -41,6 +43,12 @@ namespace Assets.Scripts.Utils
         public static T GetRandom<T>(this IList<T> collection)
         {
             return collection[Random.Range(0, collection.Count)];
+        }
+
+        public static IEnumerator Delay(this Action action, float duration)
+        {
+            yield return new WaitForSeconds(duration);
+            action.Invoke();
         }
     }
 }

@@ -112,7 +112,18 @@ namespace Assets.Scripts.Models
         public override void OnNetworkDestroy()
         {
             if(!Registry.ApplicationIsQuitting)
-                Registry.Instance.Islands.Remove(Registry.Instance.Islands.First(item => item == this));
+               Registry.Instance.Remove(this);
+        }
+
+        [ClientRpc]
+        public void RpcShowExplosionAt(string shipUuid)
+        {
+            Debug.Log("[RpcShowExplosionAt] " + shipUuid);
+            var defender = Registry.Instance.Ships.Find(ship => ship.Uuid.Equals(shipUuid));
+            Debug.Log("[RpcShowExplosionAt] " + defender.name);
+            var explosion = Prefabs.Instance.GetNewSmallExplosion();
+            explosion.transform.position = defender.transform.position;
+            Destroy(defender.gameObject);
         }
     }
 }

@@ -21,6 +21,7 @@ namespace Assets.Scripts.Behaviour
         public void Defend(Attacking attacking)
         {
             _life.CurrentHp -= attacking.AttackDamage;
+            Debug.Log(string.Format("{0} deals {1} damage to {2}, {3} hp left", attacking.name, attacking.AttackDamage, name, _life.CurrentHp));
         }
 
 //

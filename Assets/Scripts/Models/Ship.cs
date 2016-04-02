@@ -19,7 +19,7 @@ namespace Assets.Scripts.Models
         public void OnDestroy()
         {
             if (!Registry.ApplicationIsQuitting)
-                Registry.Instance.Ships.Remove(Registry.Instance.Ships.First(item => item == this));
+                Registry.Instance.Remove(this);
         }
     }
 }

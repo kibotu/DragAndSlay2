@@ -56,6 +56,8 @@ namespace Assets.Scripts.Models
         private float _hpRegenTime;
         private float _shieldRegenTime;
 
+        public bool IsDying { get; set; }
+
         public void Start()
         {
             CurrentHp = MaxHp;
@@ -116,9 +118,9 @@ namespace Assets.Scripts.Models
             CurrentHp += HpRegen;
         }
 
-        public bool IsAlive()
+        public bool IsAlive
         {
-            return CurrentHp > 0;
+            get { return CurrentHp > 0;}
         }
     }
 }

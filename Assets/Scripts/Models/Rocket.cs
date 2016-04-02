@@ -7,39 +7,41 @@ namespace Assets.Scripts.Models
     public class Rocket : NetworkBehaviour
     {
         /// <summary>
-        /// Damage on hit.
+        ///     Interpolation helper variable.
         /// </summary>
-        public float AttackDamage;
+        private float _startTime;
 
         /// <summary>
-        /// Acceleration speed.
+        ///     Acceleration speed.
         /// </summary>
         public float Acceleration;
 
         /// <summary>
-        /// Rocket Velocity.
+        ///     Damage on hit.
         /// </summary>
-        public float Velocity;
+        public float AttackDamage;
 
         /// <summary>
-        /// Source.
+        ///     Source.
         /// </summary>
         public Vector3 Attacker;
 
         /// <summary>
-        /// Target.
+        ///     Target.
         /// </summary>
         public Ship Defender;
-        
+
         /// <summary>
-        /// Direction towards from source to target.
+        ///     Direction towards from source to target.
         /// </summary>
         public Vector3 Dir;
 
         /// <summary>
-        /// Interpolation helper variable.
+        ///     Rocket Velocity.
         /// </summary>
-        private float _startTime;
+        public float Velocity;
+
+        public float MaxTravelSpeed = 3f;
 
         public void Start()
         {
@@ -51,7 +53,7 @@ namespace Assets.Scripts.Models
             // another ship has destroyed the target; Note: potentially re-targeting
             if (Defender == null)
             {
-//                Destroy(gameObject);
+                Destroy(gameObject);
                 return;
             }
 
@@ -67,17 +69,22 @@ namespace Assets.Scripts.Models
         [Command]
         private void CmdDestroyIfDead()
         {
-            if (!Defender.GetComponent<Life>().IsAlive())
+            var life = Defender.GetComponent<Life>();
+            if (life.IsAlive || life.IsDying)
                 return;
 
-            Destroy(Defender);
-            RpcDestroyIfDead(Defender.gameObject);
-        }
+            life.IsDying = true;
 
-        [ClientRpc]
-        private void RpcDestroyIfDead(GameObject defender)
-        {
-            Destroy(defender);
+            Debug.Log("[CmdDestroyIfDead] Destroy " + Defender.name);
+            Registry.Instance.CurrentPlayer.RpcShowExplosionAt(Defender.GetComponent<Ship>().Uuid);
+            Defender.gameObject.SetActive(false);
+
+            // hack until i figure out how to destroy client objects after all clients have finished action
+            Coroutiner.StartCoroutine(VectorExtensions.Delay(() =>
+            {
+                Debug.Log("Destroying " + Defender.gameObject);
+                Destroy(Defender.gameObject);
+            }, MaxTravelSpeed));
         }
 
         private void Hit()
