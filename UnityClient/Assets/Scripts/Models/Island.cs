@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Networking;
 
@@ -7,30 +8,29 @@ namespace Assets.Scripts.Models
 {
     public class Island : NetworkBehaviour
     {
-        [SyncVar]
-        public string Uuid;
-        [SyncVar]
-        public string PlayerUuid;
-        /// <summary>
-        /// Max amount of supported units per island.
-        /// </summary>
-        [SyncVar]
-        public int MaxSpawn;
-        /// <summary>
-        /// Ship spawn per second.
-        /// </summary>
-        [SyncVar]
-        public float SpawnRate;
-        [SyncVar]
-        public float CurrentRespawnRate;
-
-        public GameObject ShipType;
-
-        public Renderer IslandRenderer;
-
         public int _friendlyShips;
 
         public int _unfriendlyShips;
+
+        [SyncVar] public float CurrentRespawnRate;
+
+        public Renderer IslandRenderer;
+
+        /// <summary>
+        ///     Max amount of supported units per island.
+        /// </summary>
+        [SyncVar] public int MaxSpawn;
+
+        [SyncVar] public string PlayerUuid;
+
+        public GameObject ShipType;
+
+        /// <summary>
+        ///     Ship spawn per second.
+        /// </summary>
+        [SyncVar] public float SpawnRate;
+
+        [SyncVar] public string Uuid;
 
         public List<Ship> FriendlyShips
         {
@@ -87,7 +87,7 @@ namespace Assets.Scripts.Models
         ///     0% if at least one enemy ship but no own ships are present.
         /// </summary>
         /// <returns>Respawn rate in percent. Value between 0f and 1f.</returns>
-        public static float DominancePercentage(Island island)
+        public static float DominancePercentage(Island island, bool onlyLiving = true)
         {
             var friendly = 0;
             var foes = 0;
@@ -95,8 +95,13 @@ namespace Assets.Scripts.Models
             for (var i = 0; i < island.transform.childCount; ++i)
             {
                 var ship = island.transform.GetChild(i).gameObject;
+
                 var otherShipData = ship.GetComponent<Ship>(); // possibly cachable
                 if (otherShipData == null) continue; // skip non ship gameobjects
+
+                if (onlyLiving && !ship.GetComponent<Life>().IsAlive())
+                    continue;
+
                 if (otherShipData.Uuid == island.PlayerUuid)
                 {
                     ++friendly;
@@ -109,31 +114,43 @@ namespace Assets.Scripts.Models
 
             var sum = foes + friendly;
 
-            return sum == 0 ? 1f : friendly/(float) sum;
+            return sum == 0
+                ? 1f
+                : friendly/(float) sum;
         }
 
-        public static List<Ship> GetFriendlyShips(Island island, string playUuid)
+        public static List<Ship> GetFriendlyShips(Island island, string playUuid, bool onlyLiving = true)
         {
             var enemyShips = new List<Ship>(island.transform.childCount - 1);
             for (var i = 0; i < island.transform.childCount; ++i)
             {
                 var ship = island.transform.GetChild(i).gameObject;
+
                 var shipData = ship.GetComponent<Ship>(); // possibly cachable
                 if (shipData == null) continue; // skip non ship gameobjects
+
+                if (onlyLiving && !ship.GetComponent<Life>().IsAlive())
+                    continue;
+
                 if (shipData.PlayerUuid == playUuid)
                     enemyShips.Add(shipData);
             }
             return enemyShips;
         }
 
-        public static List<Ship> GetEnemyShips(Island island, string thisUid)
+        public static List<Ship> GetEnemyShips(Island island, string thisUid, bool onlyLiving = true)
         {
             var enemyShips = new List<Ship>(island.transform.childCount - 1);
             for (var i = 0; i < island.transform.childCount; ++i)
             {
                 var ship = island.transform.GetChild(i).gameObject;
+
                 var shipData = ship.GetComponent<Ship>(); // possibly cachable
                 if (shipData == null) continue; // skip non ship gameobjects
+
+                if (onlyLiving && !ship.GetComponent<Life>().IsAlive())
+                    continue;
+
                 if (shipData.PlayerUuid != thisUid)
                     enemyShips.Add(shipData);
             }
@@ -142,20 +159,13 @@ namespace Assets.Scripts.Models
 
         public static int AmountFriendlyUnits(Island island)
         {
-            var friendly = 0;
+            return island.FriendlyShips.Count;
+        }
 
-            for (var i = 0; i < island.transform.childCount; ++i)
-            {
-                var ship = island.transform.GetChild(i).gameObject;
-                var otherShipData = ship.GetComponent<Ship>(); // possibly cachable
-                if (otherShipData == null) continue; // skip non ship gameobjects
-                if (otherShipData.PlayerUuid == island.PlayerUuid)
-                {
-                    ++friendly;
-                }
-            }
-
-            return friendly;
+        public void OnDestroy()
+        {
+            if (!Registry.ApplicationIsQuitting)
+                Registry.Instance.Islands.Remove(Registry.Instance.Islands.First(item => item == this));
         }
     }
 }

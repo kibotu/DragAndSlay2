@@ -64,9 +64,20 @@ namespace Assets.Scripts.Models
             Hit();
         }
 
-        private void Attack()
+        [Command]
+        private void CmdDestroyIfDead()
         {
-            // Defender.GetComponent<Defence>().Defend(this);
+            if (!Defender.GetComponent<Life>().IsAlive())
+                return;
+
+            Destroy(Defender);
+            RpcDestroyIfDead(Defender.gameObject);
+        }
+
+        [ClientRpc]
+        private void RpcDestroyIfDead(GameObject defender)
+        {
+            Destroy(defender);
         }
 
         private void Hit()
@@ -78,7 +89,7 @@ namespace Assets.Scripts.Models
             //var hit = Prefabs.Instance.GetNewSmallExplosion();
             //hit.transform.position = gameObject.transform.position;
             //hit.transform.parent = Defender.transform;
-            Attack();
+            CmdDestroyIfDead();
             Destroy(gameObject);
         }
 

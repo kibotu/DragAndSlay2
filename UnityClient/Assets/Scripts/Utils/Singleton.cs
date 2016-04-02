@@ -14,13 +14,13 @@ namespace Assets.Scripts.Utils
 
         private static readonly object _lock = new object();
 
-        private static bool _applicationIsQuitting;
+        public static bool ApplicationIsQuitting;
 
         public static T Instance
         {
             get
             {
-                if (_applicationIsQuitting)
+                if (ApplicationIsQuitting)
                 {
                     Debug.LogWarning("[Singleton] Instance '" + typeof (T) +
                                      "' already destroyed on application quit." +
@@ -76,7 +76,7 @@ namespace Assets.Scripts.Utils
         /// </summary>
         public void OnDestroy()
         {
-            _applicationIsQuitting = true;
+            ApplicationIsQuitting = true;
         }
 
         private void OnApplicationQuit()

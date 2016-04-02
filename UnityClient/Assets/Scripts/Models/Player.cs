@@ -63,7 +63,9 @@ namespace Assets.Scripts.Models
 
             name = "Player " + uuid;
 
-            foreach (var islandData in Registry.Instance.Islands.Where(islandData => string.IsNullOrEmpty(islandData.PlayerUuid)))
+            foreach (
+                var islandData in
+                    Registry.Instance.Islands.Where(islandData => string.IsNullOrEmpty(islandData.PlayerUuid)))
             {
                 islandData.PlayerUuid = uuid;
                 Spawned = true;
@@ -105,6 +107,12 @@ namespace Assets.Scripts.Models
                 moveToTarget.Target = target.gameObject;
                 moveToTarget.enabled = true;
             }
+        }
+
+        public override void OnNetworkDestroy()
+        {
+            if(!Registry.ApplicationIsQuitting)
+                Registry.Instance.Islands.Remove(Registry.Instance.Islands.First(item => item == this));
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using UnityEngine.Networking;
+﻿using System.Linq;
+using UnityEngine.Networking;
 
 namespace Assets.Scripts.Models
 {
@@ -13,6 +14,12 @@ namespace Assets.Scripts.Models
 
             // PlayerData = Registry.Player [PlayerData.Uid].GetComponent<PlayerData> ();
             // GetComponentInChildren<Renderer>().material.color = PlayerData.Color;
+        }
+
+        public void OnDestroy()
+        {
+            if (!Registry.ApplicationIsQuitting)
+                Registry.Instance.Ships.Remove(Registry.Instance.Ships.First(item => item == this));
         }
     }
 }

@@ -82,13 +82,14 @@ namespace Assets.Scripts.Behaviour
 
             var enemyShip = enemyShips.GetRandom();
 
+            Debug.Log(name + " starts to attack " + enemyShip.name);
+
+            // 6) do actual combat and sets destroy flag if it is destroyed
+            enemyShip.GetComponent<Defending>().Defend(this);
+
+            // 7) send rocket which destroys enemy ship if flag is set
             var rocket = ((GameObject) Instantiate(WeaponType, transform.position, Quaternion.identity)).GetComponent<Rocket>();
-            rocket.AttackDamage = AttackDamage;
-
-            // server does combat and sets flag if rockets should destroy ship
-            // then spawns a network rocket that destroy ships if flag is set
             NetworkServer.Spawn(rocket.gameObject);
-
             RpcSearchAndDestroy(rocket.gameObject, _ship.Uuid, enemyShip.Uuid);
         }
 

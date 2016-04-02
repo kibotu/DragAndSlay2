@@ -66,12 +66,26 @@ namespace Assets.Scripts.Models
 
         public void Update()
         {
-            if(!isServer)
+            if (!isServer)
                 return;
 
             RegenerateHp();
 
             RegenerateShields();
+
+            CmdUpdateHitPointsBar();
+        }
+
+        [Command]
+        private void CmdUpdateHitPointsBar()
+        {
+            RpcUpdateHealthPointsBar(gameObject, CurrentHp / MaxHp);
+        }
+
+        [ClientRpc]
+        void RpcUpdateHealthPointsBar(GameObject ship, float percent)
+        {
+            ship.GetComponentInChildren<HealthPointsBar>().Percent = percent;
         }
 
         private void RegenerateShields()
@@ -100,6 +114,11 @@ namespace Assets.Scripts.Models
             _hpRegenTime -= 1/HpRegen;
 
             CurrentHp += HpRegen;
+        }
+
+        public bool IsAlive()
+        {
+            return CurrentHp > 0;
         }
     }
 }
