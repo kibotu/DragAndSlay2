@@ -82,6 +82,9 @@ namespace Assets.Scripts.Models
             // hack until i figure out how to destroy client objects after all clients have finished action
             Coroutiner.StartCoroutine(VectorExtensions.Delay(() =>
             {
+                if(!isServer)
+                    return;
+
                 Debug.Log("Destroying " + Defender.gameObject);
                 Destroy(Defender.gameObject);
             }, MaxTravelSpeed));
