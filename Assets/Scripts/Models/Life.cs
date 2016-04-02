@@ -87,7 +87,7 @@ namespace Assets.Scripts.Models
         {
             ship.GetComponentInChildren<HealthPointsBar>().Percent = percent;
         }
-
+        
         private void RegenerateShields()
         {
             if (!(CurrentShield < MaxShield))
