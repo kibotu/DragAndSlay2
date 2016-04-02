@@ -1,2 +1,1 @@
-# Drag'n Slay [![Build Status](https://travis-ci.org/kibotu/DragAndSlay2.svg?branch=master)](https://travis-ci.org/kibotu/DragAndSlay2)
-=====================================================================================================================================
+# Drag'n Slay [![Build Status](https://travis-ci.org/kibotu/DragAndSlay2.svg?branch=master)](https://travis-ci.org/kibotu/DragAndSlay2) [![Unity3D Version](https://raw.githubusercontent.com/kibotu/DragAndSlay2/master/Resources/Unity3D_5.3.41f.svg)](http://unity3d.com/get-unity/download/archive) 
